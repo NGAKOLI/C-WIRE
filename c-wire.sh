@@ -8,3 +8,4 @@ if ["$2" -ne 0] && ["$3" -eq 0] ; then
 
 cat  
 if ["$2" -eq 0] && ["$3" -ne 0] ; then
+cat 'data.txt' | grep -E "^${var};.*$"
