@@ -9,11 +9,11 @@ if ["$station"!="hvb"] && ["$station"!="hva"] &&  ["$station"!="lv"]; then
   
   echo 'saisie incorrect:entrer hvb,hva ou lv'
 else
-if["$station" -eq "hvb"];then
+if["$station"=="hvb"];then
   cat 'c-wire_v00.dat' |grep -E "[0-9]+;[0-9]+;-;-;">"$1"
-  elif ["$station"-eq "hva"]; then
+  elif ["$station"=="hva"]; then
   cat 'c-wire_v00.dat' | grep -E "[0-9]+;-;[0-9]+;-;">"$1"
-  elif ["$station" -eq "lv"];then
+  elif ["$station"=="lv"];then
   cat 'c-wire_v00.dat' | grep -E "[0-9]+;-;[0-9]+;[0-9]+;">"$1"
   fi
   fi
