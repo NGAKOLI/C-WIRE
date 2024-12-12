@@ -26,8 +26,11 @@ if ["station"=="hvb"] && ["$consumer"=="all"] && ["$consumer"=="indiv"] && ["$co
  fi
  if ["station"=="lv"] && ["$consumer"=="all"] && ["$consumer"=="indiv"] && ["$consumer"=="comp"]; then
  
- fi
+fi
 
+echo " souhaitez-vous une centrale spécifique ? $4"  
+
+if["powerplant"==[0-5]+]
 
   cat  grep "$1" 
 cat | cut 
