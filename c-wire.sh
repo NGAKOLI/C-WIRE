@@ -5,7 +5,8 @@ consommateur=$3
 centrale=$4
 
 
-if [ "$station" != "hvb" ] && [ "$station" != "hva "] &&  [ " $station" != "lv" ]; then
+
+if [ "$station" != "hvb" ] && [ "$station" != "hva "] && [ " $station" != "lv" ]; then
   echo 'Erreur : saisie incorrect. Entrer hvb, hva ou lv'     //  En plus du message d’erreur, l’aide doit aussi s’afficher en dessous, comme si l’utilisateur avait tapé l’option -h
 fi
 
