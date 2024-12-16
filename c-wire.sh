@@ -3,7 +3,6 @@ station="$2"
 consumer="$3"
 powerplant="$4"
 
-test
 
 if [ "$station" != hvb ] && [ "$station" != "hva" ] && [ "$station" != "lv" ]; then
     echo "saisie incorrect:entrer hvb,hva ou lv"
