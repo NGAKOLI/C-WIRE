@@ -13,7 +13,7 @@ if [ "$station" == "hvb" ] && [[ "$consumer" == "all" || "$consumer" == "indiv" 
  exit 2;
 elif [ "$station" == "hva" ] && [[ "$consumer" == "all" || "$consumer" == "indiv" || "$consumer" != "comp" ]]; then
   echo 'saisir: dcomp'
-elif [ "$station" == "lv" ] && [ "$consumer" != "all" ] && [ "$consumer" != "indiv" ] && [ "$consumer" != "comp" ]; then
+elif [ "$station" == "lv" ] && [[ "$consumer" != "all" || "$consumer" != "indiv" || "$consumer" != "comp" ]]; then
  echo "saisir:'all','indiv',comp "
  fi
 
@@ -21,7 +21,7 @@ elif [ "$station" == "lv" ] && [ "$consumer" != "all" ] && [ "$consumer" != "ind
 if [ "$station" == "hvb" ]; then 
    grep -E "[0-9]+;[0-9]+;-;-;" "$1">Hvb.csv
 elif [ "$station" == "hva" ]; then
-  cat "$1" | grep -E "[0-9]+;-;[0-9]+;-;" "$1" >Hva.csv
+   cat"$1" | grep -E "[0-9]+;-;[0-9]+;-;" "$1" >Hva.csv
 elif [ "$station" == "lv" ];then
   cat "$1" | grep -E "[0-9]+;-;[0-9]+;[0-9]+;">Lv.csv
 fi 
