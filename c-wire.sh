@@ -122,20 +122,20 @@ if [[ "$choix" == "1" ]]; then
     grep -E "^$id_centrale+;[0-9]+;-;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 2,7,8 | tr '-' '0' > ./tmp/hvb_comp_$id_centrale.csv 
  
   elif [ "$station" == "hva" ] && [ "$consumer" == "comp" ]; then
-    grep -E "^$id_centrale+;-;[0-9]+;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 3,7,8 | tr '-' '0' > ./tmp/hva_comp_$id_centrale.csv
+    grep -E "^$id_centrale+;[0-9]+;[0-9]+;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 2,3,7,8 | tr '-' '0' > ./tmp/hva_comp_$id_centrale.csv
    
   elif [ "$station" == "lv" ]; then
     if [ "$consumer" == "comp" ]; then
-     grep -E "^$id_centrale+;-;-;[0-9]+;[0-9]+" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'>./tmp/lv_comp_$id_centrale.csv
+     grep -E "^$id_centrale+;-;[0-9]+;[0-9]+;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' > ./tmp/lv_comp_$id_centrale.csv
   
     elif [ "$consumer" == "indiv" ]; then
-      grep -E "^$id_centrale+;-;-;[0-9]+;-;[0-9]+" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >>./tmp/lv_indiv_$id_centrale.csv
+      grep -E "^$id_centrale+;-;[0-9]+;[0-9]+;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> ./tmp/lv_indiv_$id_centrale.csv
     
     elif [ "$consumer" == "all" ]; then
-      grep -E "^$id_centrale+;-;-;[0-9]+;[0-9]+" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  > ./tmp/lv_inter.csv
-      grep -E "^$id_centrale+;-;-;[0-9]+;-;[0-9]+;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  >> ./tmp/lv_inter.csv
-      sort -t ';' -k3 -nr ./tmp/lv_inter.csv | head -n 10 > ./tmp/lv_all_$id_centrale.csv
-      sort -t ';' -k3 -nr ./tmp/lv_inter.csv | tail -n 10 >> ./tmp/lv_all_$id_centrale.csv
+      grep -E "^$id_centrale+;-;-;[0-9]+;[0-9]+" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  > ./tmp/lv_all.csv
+      grep -E "^$id_centrale+;-;[0-9]+;[0-9]+;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> ./tmp/lv_all.csv
+      grep -E "^$id_centrale+;-;-;[0-9]+;-;[0-9]+;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  >> ./tmp/lv_all.csv
+      
     fi
 fi
 
@@ -153,18 +153,19 @@ else
     grep -E "^[0-9]+;[0-9]+;-;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 2,7,8 | tr '-' '0' > ./tmp/hvb_comp.csv
  
   elif [ "$station" == "hva" ] && [ "$consumer" == "comp" ]; then
-    grep -E "^[0-9]+;-;[0-9]+;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 3,7,8 | tr '-' '0' > ./tmp/hva_comp.csv
+    grep -E "^[0-9]+;[0-9]+;[0-9]+;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 2,3,7,8 | tr '-' '0' > ./tmp/hva_comp.csv
    
   elif [ "$station" == "lv" ]; then
     if [ "$consumer" == "comp" ]; then
-     grep -E "^[0-9]+;-;-;[0-9]+;[0-9]+" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'>./tmp/lv_comp.csv
+     grep -E "^[0-9]+;-;[0-9]+;[0-9]+;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' > ./tmp/lv_comp.csv
   
     elif [ "$consumer" == "indiv" ]; then
-      grep -E "^[0-9]+;-;-;[0-9]+;-;[0-9]+" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >>./tmp/lv_indiv.csv
+      grep -E "^[0-9]+;-;[0-9]+;[0-9]+;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> ./tmp/lv_indiv.csv
     
     elif [ "$consumer" == "all" ]; then
       grep -E "^[0-9]+;-;-;[0-9]+;[0-9]+" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  > ./tmp/lv_all.csv
-      grep -E "^[0-9]+;-;-;[0-9]+;-;[0-9]+;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  >> ./tmp/lv_indiv.csv
+      grep -E "^[0-9]+;-;[0-9]+;[0-9]+;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' > ./tmp/lv_all.csv
+      grep -E "^[0-9]+;-;-;[0-9]+;-;[0-9]+;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  >> ./tmp/lv_all.csv
       
     fi
   fi
