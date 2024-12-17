@@ -40,6 +40,7 @@ verification=0
 if [[ "$cheminfichier" != *.dat ]]; then
   echo “Le fichier spécifié n’est pas un fichier .dat “
   verification=1
+  affiche_aide
 fi
 
 if [ -d "./tmp" ]; then # verifie la présence dossier tmp
@@ -68,9 +69,11 @@ if [ "$station" == "hvb" ] && [[ "$consumer" == "all" || "$consumer" == "indiv" 
   
 elif [ "$station" == "hva" ] && [[ "$consumer" == "all" || "$consumer" == "indiv" || "$consumer" != "comp" ]]; then
   echo "  Erreur saisie incorrect : entrer 'comp' "
-    exit 3
+  exit 3
+  affiche_aide
 elif [ "$station" == "lv" ] && [[ "$consumer" != "all" && "$consumer" != "indiv" && "$consumer" != "comp" ]]; then
  echo "Erreur saisie incorrect : entrer 'all','indiv','comp' "
+ affiche_aide
   exit 4
   
 fi
@@ -116,7 +119,7 @@ if [[ "$choix" == "1" ]]; then
   grep -E "^$id_centrale+;-;-;[0-9]+;-;[0-9]+" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,6,7,8 | tr '-' '0' >> ./tmp/filtren_$id_centrale.csv
   
   if [ "$station" == "hvb" ] && [ "$consumer" == "comp" ]; then
-    grep -E "^$id_centrale+;[0-9]+;-;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 2,7,8 | tr '-' '0' > ./tmp/hvb_comp_$id_centrale.csv
+    grep -E "^$id_centrale+;[0-9]+;-;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 2,7,8 | tr '-' '0' > ./tmp/hvb_comp_$id_centrale.csv 
  
   elif [ "$station" == "hva" ] && [ "$consumer" == "comp" ]; then
     grep -E "^$id_centrale+;-;[0-9]+;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 3,7,8 | tr '-' '0' > ./tmp/hva_comp_$id_centrale.csv
@@ -131,8 +134,8 @@ if [[ "$choix" == "1" ]]; then
     elif [ "$consumer" == "all" ]; then
       grep -E "^$id_centrale+;-;-;[0-9]+;[0-9]+" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  > ./tmp/lv_inter.csv
       grep -E "^$id_centrale+;-;-;[0-9]+;-;[0-9]+;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  >> ./tmp/lv_inter.csv
-      sort -t ';' -k3 -nr lv_inter.csv | head -n 10 > ./tmp/lv_all_$id_centrale.csv
-      sort -t ';' -k3 -nr lv_inter.csv | tail -n 10 >> ./tmp/lv_all_$id_centrale.csv
+      sort -t ';' -k3 -nr ./tmp/lv_inter.csv | head -n 10 > ./tmp/lv_all_$id_centrale.csv
+      sort -t ';' -k3 -nr ./tmp/lv_inter.csv | tail -n 10 >> ./tmp/lv_all_$id_centrale.csv
     fi
 fi
 
@@ -160,10 +163,9 @@ else
       grep -E "^[0-9]+;-;-;[0-9]+;-;[0-9]+" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >>./tmp/lv_indiv.csv
     
     elif [ "$consumer" == "all" ]; then
-      grep -E "^[0-9]+;-;-;[0-9]+;[0-9]+" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  > ./tmp/lv_inter.csv
-      grep -E "^[0-9]+;-;-;[0-9]+;-;[0-9]+;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  >> ./tmp/lv_inter.csv
-      sort -t ';' -k3 -nr ./tmp/lv_inter.csv | head -n 10 > ./tmp/lv_all.csv
-      sort -t ';' -k3 -nr ./tmp/lv_inter.csv | tail -n 10 >> ./tmp/lv_all.csv
+      grep -E "^[0-9]+;-;-;[0-9]+;[0-9]+" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  > ./tmp/lv_all.csv
+      grep -E "^[0-9]+;-;-;[0-9]+;-;[0-9]+;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  >> ./tmp/lv_indiv.csv
+      
     fi
   fi
 fi
