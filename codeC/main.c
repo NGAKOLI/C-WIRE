@@ -202,33 +202,26 @@ void traiterFichiers( FILE* fichier , FILE* final){
     ajouterFichier(a , final);
 }
 
-int verifierargument(int argc){
-    if( argc != 3){
-        return 0;
-    }
-    return 1;
-}
+
 
 int main(int argc, char* argv[]){
-    if( verifierargument(argc) != 1){
+    if( argc != 3){
         exit(3);
     }
-    FILE* fichier ;
-    FILE* final = NULL;
-    fichier=fopen( "hvb_comp.csv" , "r" );
-    final = fopen("final.csv", "a+");
+    FILE* fichier_tmp =fopen( argv[1] , "r" );
+    FILE* fichier_final =fopen( argv[2] , "a+" );
 
-    if( fichier == NULL || final==NULL ){
+    if( fichier_tmp == NULL){
         printf("Ouverture du fichier impossible\n");
         printf("code d'erreur = %d \n", errno  );
         printf("Message d'erreur = %s \n", strerror(errno) );
         exit(1);
     }
 
-    traiterFichiers( fichier , final );
+    traiterFichiers( fichier_tmp , fichier_final );
 
-    fclose(fichier);
-    fclose(final);
+    fclose(fichier_tmp);
+    fclose(fichier_final);
         
     return 0;
 }
