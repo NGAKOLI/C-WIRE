@@ -173,7 +173,6 @@ void ajouterFichier(Arbre*a, FILE* fichier){
         ajouterFichier(a->fgauche, fichier);  
         fprintf(fichier, "%d;%ld;%ld\n", a->station.id_station, a->station.capacite, a->station.som_conso);
         ajouterFichier(a->fdroit, fichier);
-        
     }
     free(a);  
 }
@@ -230,6 +229,6 @@ int main(int argc, char* argv[]){
 
     fclose(fichier);
     fclose(final);
-
+        
     return 0;
 }
