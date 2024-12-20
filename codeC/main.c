@@ -171,7 +171,7 @@ Arbre*sommeConsommation(Arbre*a, long conso, int id_stat){
 void ajouterFichier(Arbre*a, FILE* fichier){  
     if( a!=NULL ){ 
         ajouterFichier(a->fgauche, fichier);  
-        fprintf(fichier, "%d;%ld;%ld\n", a->station.id_station, a->station.capacite, a->station.som_conso);
+        fprintf(fichier, "%d:%ld:%ld\n", a->station.id_station, a->station.capacite, a->station.som_conso);
         ajouterFichier(a->fdroit, fichier);
     }
     free(a);  
@@ -185,7 +185,7 @@ Arbre*extraireFichier(FILE* fichier){
     long capacite; 
     long conso;  
 
-    while(fscanf(fichier, "%d;%ld;%ld", &id_stat, &capacite, &conso) != EOF){ 
+    while(fscanf(fichier, "%d:%ld:%ld", &id_stat, &capacite, &conso) != EOF){ 
         if(conso == 0){  
             a = insertionAVL(a, id_stat, capacite, &h);  
         }

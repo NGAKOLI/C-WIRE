@@ -4,7 +4,7 @@ echo " cheminfichier: $1"
 cheminfichier="$1"
 station="$2"
 consumer="$3"
-powerplant="$4"
+id_centrale="$4"
 
 
 
@@ -30,7 +30,7 @@ affiche_aide(){
 
 if [[ "$*" == *"-h"* ]] || [[ $# -lt 3 ]]; then  # affiche option d'aide si '-h' selectionné ou s'il y a une erreur trop d'arguments
     echo " " 
-    echo " Erreur :nombre d'argument "  
+    echo " Erreur : nombre d'arguments incorrect "  
     affiche_aide
     
 fi
@@ -69,8 +69,8 @@ if [ "$station" == "hvb" ] && [[ "$consumer" == "all" || "$consumer" == "indiv" 
   
 elif [ "$station" == "hva" ] && [[ "$consumer" == "all" || "$consumer" == "indiv" || "$consumer" != "comp" ]]; then
   echo "  Erreur saisie incorrect : entrer 'comp' "
-  exit 3
   affiche_aide
+  exit 3
 elif [ "$station" == "lv" ] && [[ "$consumer" != "all" && "$consumer" != "indiv" && "$consumer" != "comp" ]]; then
  echo "Erreur saisie incorrect : entrer 'all','indiv','comp' "
  affiche_aide
@@ -97,28 +97,28 @@ if [[ "$choix" == "1" ]]; then
 
     fichier_final="/workspaces/C-WIRE/tests/${station}_${consumer}_${id_centrale}.csv"
     fichier_tmp="/workspaces/C-WIRE/tmp/${station}_${consumer}_${id_centrale}_tmp.csv"
-    echo " Station_${station};Capacite;Consommation_${consumer}" >> ./tests/${station}_${consumer}_${id_centrale}.csv
+    echo " Station_${station}:Capacite:Consommation_${consumer}" >> ./tests/${station}_${consumer}_${id_centrale}.csv
   
   if [ "$station" == "hvb" ] && [ "$consumer" == "comp" ]; then
-    grep -E "^$id_centrale+;[0-9]+;-;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 2,7,8 | tr '-' '0' >> "$fichier_tmp"
+    grep -E "^$id_centrale+;[0-9]+;-;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 2,7,8 | tr '-' '0' | tr ';' ':' >> "$fichier_tmp"
     
   elif [ "$station" == "hva" ] && [ "$consumer" == "comp" ]; then
-    grep -E "^$id_centrale+;[0-9]+;[0-9]+;-;-;-;[0-9]+;-"  "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 3,7,8 | tr '-' '0' >> "$fichier_tmp"
-    grep -E "^$id_centrale+;-;[0-9]+;-;[0-9]+;-;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 3,7,8 | tr '-' '0' >> "$fichier_tmp"
+    grep -E "^$id_centrale+;[0-9]+;[0-9]+;-;-;-;[0-9]+;-"  "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 3,7,8 | tr '-' '0' | tr ';' ':' >> "$fichier_tmp"
+    grep -E "^$id_centrale+;-;[0-9]+;-;[0-9]+;-;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 3,7,8 | tr '-' '0' | tr ';' ':' >> "$fichier_tmp"
    
   elif [ "$station" == "lv" ]; then
     if [ "$consumer" == "comp" ]; then
-     grep -E "^$id_centrale+;-;[0-9]+;[0-9]+;-;-;[0-9]+;-" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> "$fichier_tmp"
-     grep -E "^$id_centrale+;-;-;[0-9]+;[0-9]+;-;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> "$fichier_tmp"
+     grep -E "^$id_centrale+;-;[0-9]+;[0-9]+;-;-;[0-9]+;-" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' | tr ';' ':' >> "$fichier_tmp"
+     grep -E "^$id_centrale+;-;-;[0-9]+;[0-9]+;-;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  | tr ';' ':'>> "$fichier_tmp"
   
     elif [ "$consumer" == "indiv" ]; then
-      grep -E "^$id_centrale+;-;[0-9]+;[0-9]+;-;-;[0-9]+;-" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> "$fichier_tmp"
-      grep -E "^$id_centrale+;-;-;[0-9]+;-;[0-9]+;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> "$fichier_tmp"
+      grep -E "^$id_centrale+;-;[0-9]+;[0-9]+;-;-;[0-9]+;-" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' | tr ';' ':' >> "$fichier_tmp"
+      grep -E "^$id_centrale+;-;-;[0-9]+;-;[0-9]+;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  | tr ';' ':' >> "$fichier_tmp"
     
     elif [ "$consumer" == "all" ]; then
-      grep -E "^$id_centrale+;-;[0-9]+;[0-9]+;-;-;[0-9]+;-" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> "$fichier_tmp"
-      grep -E "^$id_centrale+;-;-;[0-9]+;[0-9]+;-;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> "$fichier_tmp"
-      grep -E "^$id_centrale+;-;-;[0-9]+;-;[0-9]+;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> "$fichier_tmp"
+      grep -E "^$id_centrale+;-;[0-9]+;[0-9]+;-;-;[0-9]+;-" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' | tr ';' ':' >> "$fichier_tmp"
+      grep -E "^$id_centrale+;-;-;[0-9]+;[0-9]+;-;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  | tr ';' ':' >> "$fichier_tmp"
+      grep -E "^$id_centrale+;-;-;[0-9]+;-;[0-9]+;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' | tr ';' ':' >> "$fichier_tmp"
       
     fi
 fi
@@ -129,29 +129,29 @@ else
 
   fichier_final="/workspaces/C-WIRE/tests/${station}_${consumer}.csv"
   fichier_tmp="/workspaces/C-WIRE/tmp/${station}_${consumer}_tmp.csv"
-  echo " Station_${station};Capacite;Consommation_${consumer}" >> ./tests/${station}_${consumer}.csv
+  echo " Station_${station}:Capacite:Consommation_${consumer}" >> ./tests/${station}_${consumer}.csv
   echo "Traitement effectué sur toutes les centrales du fichier " 
   
   if [ "$station" == "hvb" ] && [ "$consumer" == "comp" ]; then
-    grep -E "^[0-9]+;[0-9]+;-;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 2,7,8 | tr '-' '0' >> "$fichier_tmp"
+    grep -E "^[0-9]+;[0-9]+;-;-;" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 2,7,8 | tr '-' '0' | tr ';' ':' >> "$fichier_tmp"
  
   elif [ "$station" == "hva" ] && [ "$consumer" == "comp" ]; then
-    grep -E "^[0-9]+;[0-9]+;[0-9]+;-;-;-;[0-9]+;-"  "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 3,7,8 | tr '-' '0' >> "$fichier_tmp"
-    grep -E "^[0-9]+;-;[0-9]+;-;[0-9]+;-;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 3,7,8 | tr '-' '0' >> "$fichier_tmp"
+    grep -E "^[0-9]+;[0-9]+;[0-9]+;-;-;-;[0-9]+;-"  "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 3,7,8 | tr '-' '0' | tr ';' ':' >> "$fichier_tmp"
+    grep -E "^[0-9]+;-;[0-9]+;-;[0-9]+;-;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 3,7,8 | tr '-' '0' | tr ';' ':' >> "$fichier_tmp"
    
   elif [ "$station" == "lv" ]; then
     if [ "$consumer" == "comp" ]; then
-     grep -E "^[0-9]+;-;[0-9]+;[0-9]+;-;-;[0-9]+;-" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> "$fichier_tmp"
-     grep -E "^[0-9]+;-;-;[0-9]+;[0-9]+;-;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> "$fichier_tmp"
+     grep -E "^[0-9]+;-;[0-9]+;[0-9]+;-;-;[0-9]+;-" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' | tr ';' ':' >> "$fichier_tmp"
+     grep -E "^[0-9]+;-;-;[0-9]+;[0-9]+;-;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' | tr ';' ':' >> "$fichier_tmp"
 
     elif [ "$consumer" == "indiv" ]; then
-      grep -E "^[0-9]+;-;[0-9]+;[0-9]+;-;-;[0-9]+;-" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> "$fichier_tmp"
-      grep -E "^[0-9]+;-;-;[0-9]+;-;[0-9]+;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> "$fichier_tmp"
+      grep -E "^[0-9]+;-;[0-9]+;[0-9]+;-;-;[0-9]+;-" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' | tr ';' ':' >> "$fichier_tmp"
+      grep -E "^[0-9]+;-;-;[0-9]+;-;[0-9]+;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' | tr ';' ':' >> "$fichier_tmp"
     
     elif [ "$consumer" == "all" ]; then
-      grep -E "^[0-9]+;-;[0-9]+;[0-9]+;-;-;[0-9]+;-" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> "$fichier_tmp"
-      grep -E "^[0-9]+;-;-;[0-9]+;[0-9]+;-;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> "$fichier_tmp"
-      grep -E "^[0-9]+;-;-;[0-9]+;-;[0-9]+;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' >> "$fichier_tmp"
+      grep -E "^[0-9]+;-;[0-9]+;[0-9]+;-;-;[0-9]+;-" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0' | tr ';' ':' >> "$fichier_tmp"
+      grep -E "^[0-9]+;-;-;[0-9]+;[0-9]+;-;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  | tr ';' ':'>> "$fichier_tmp"
+      grep -E "^[0-9]+;-;-;[0-9]+;-;[0-9]+;-;[0-9]" "/workspaces/C-WIRE/input/c-wire_v00.dat" | cut -d ';' -f 4,7,8 | tr '-' '0'  | tr ';' ':' >> "$fichier_tmp"
     
     fi
   fi
@@ -163,6 +163,14 @@ make -C /workspaces/C-WIRE/codeC
 
 # Exécution du programme C avec les fichiers temporaires et finaux
 /workspaces/C-WIRE/codeC/main "$fichier_tmp" "$fichier_final"
+if [[ "$station" == "lv" && "$consumer" == "all" ]]; then
+  fichier_minmax="/workspaces/C-WIRE/tests/lv_all_minmax.csv"
+  sort -t ':' -k3 -nr "$fichier_final" |tail -n +1 | head -n 10 > "$fichier_minmax"
+  sort -t ':' -k3 -n "$fichier_final" |tail -n +2 | head -n 10 >> "$fichier_minmax"
+  
+  echo "Fichier lv_all_minmax.csv généré avec succès."
+
+fi
 
 
 fin2=$(date +%s)
