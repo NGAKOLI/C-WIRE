@@ -164,12 +164,15 @@ make -C /workspaces/C-WIRE/codeC
 # Exécution du programme C avec les fichiers temporaires et finaux
 /workspaces/C-WIRE/codeC/main "$fichier_tmp" "$fichier_final"
 if [[ "$station" == "lv" && "$consumer" == "all" ]]; then
-  fichier_minmax="/workspaces/C-WIRE/tests/lv_all_minmax.csv"
-  sort -t ':' -k3 -nr "$fichier_final" |tail -n +1 | head -n 10 > "$fichier_minmax"
-  sort -t ':' -k3 -n "$fichier_final" |tail -n +2 | head -n 10 >> "$fichier_minmax"
+  fichier_minmax="/workspaces/C-WIRE/tmp/lv_all_moon.csv"
+  sort -t ':' -k3 -nr "$fichier_final" |tail -n +1 | head -n 5 > "$fichier_minmax"
+  sort -t ':' -k3 -n "$fichier_final" |tail -n +2 | head -n 5 >> "$fichier_minmax"
+  fichier_tmp_lv_min_max="/workspaces/C-WIRE/tmp/lv_all_minmax_tmp.csv"
+  fichier_lv_min_max="/workspaces/C-WIRE/tests/lv_all_minmax.csv"
+  awk -F ':' '{diff = $3 - $2; abs = (diff < 0) ? -diff : diff; print $0, abs}' OFS=':' "$fichier_minmax" > "$fichier_tmp_lv_min_max"
+  sort -t ':' -k4 -nr "$fichier_tmp_lv_min_max" | cut -d ':' -f1-3 > "$fichier_lv_min_max"
   
-  echo "Fichier lv_all_minmax.csv généré avec succès."
-
+  echo "Fichier lv_all_minmax.csv trié par quantité absolue d'énergie généré avec succès."
 fi
 
 
