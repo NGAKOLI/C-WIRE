@@ -31,6 +31,7 @@ C-WIRE est un projet qui permet de faire la synthèse de données d’un systèm
   - `avl_gestion.c` et `avl_gestion.h`: Gestion arbre type AVL.
   - `avl_traitement_fichier.c` et `avl_traitement_fichier.h`: Traitement du fichier de donnée avec arbre AVL.
   - `Makefile`: Fichier Makefile pour compiler le programme C.
+- `input/`: Répertoire pour les fichiers d'entrées
 - `tests/`: Répertoire pour les fichiers de test générés.
 - `tmp/`: Répertoire pour les fichiers temporaires.
 
