@@ -1,18 +1,19 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -std=c99
-TARGET = main
-SRCS = main.c avl_traitement_fichier.c avl_gestion.c
-OBJS = $(SRCS:.c=.o)
+CC = gcc # compilateur à utiliser
 
-all: $(TARGET)
+CFLAGS = -Wall -Wextra -std=c99 # définie les options du compilateur
+TARGET = main # définie le nom de l'exécutable à générer
+SRCS = main.c avl_traitement_fichier.c avl_gestion.c # liste des fichiers sources
+OBJS = $(SRCS:.c=.o) # génère liste des fichiers objets à partir des fichiers sources ( remplace .c par .o)
 
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
+all: $(TARGET) # règle du compilateur par défaut
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(TARGET): $(OBJS) # règle pour générer l'exécutable en fonction des fichiers objets
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) 
 
-clean:
+%.o: %.c 
+	$(CC) $(CFLAGS) -c $< -o $@ 
+
+clean: # nettoie les fichiers générés
 	rm -f $(TARGET) $(OBJS)
 
 .PHONY: all clean
