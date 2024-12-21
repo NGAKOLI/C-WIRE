@@ -20,7 +20,7 @@ C-WIRE est un projet qui permet de faire la synthèse de données d’un systèm
 - Option pour sélectionner une centrale électrique spécifique.
 - Génération de fichiers de sortie avec les données filtrées par Station / Capacité / Consommation.
 - Calcul différence entre la capacité totale et la consommation totale (min et max) pour les stations `lv` avec le type de consommateur `all`.
-- Affichage temps d'exécution du programme
+- Affichage du temps d'exécution du programme
 
 ## Structure du projet
 
@@ -37,7 +37,7 @@ C-WIRE est un projet qui permet de faire la synthèse de données d’un systèm
 
 ## Utilisation
 
-Pour exécuter ce programme utilisez la commande suivante :
+- Pour exécuter ce programme utilisez la commande suivante :
 
 ```bash
 bash c-wire.sh <chemindufichier> <type_station> <type_consommateur>
@@ -49,15 +49,15 @@ ou
 ./c-wire.sh <chemindufichier> <type_station> <type_consommateur>
 ```
 
-Pour sélectionner une centrale spécifique, saisissez :
+- Pour sélectionner une centrale spécifique, saisissez :
 ```bash
-"1"
+  1 
 ```   
 dans le terminal suite à la question suivante 
-_"Souhaitez-vous sélectionner une centrale spécifique ? (Oui = 1)"_
-Ensuite, saisissez la valeur correspondant à la centrale souhaitée :
-     Valeurs possibles : 1, 2, 3, 4 ou 5
-    *Si vous ne souhaitez aucune centrale spécifique, saisissez une valeur quelconque dans le terminal.
+_"Souhaitez-vous sélectionner une centrale spécifique ? (Oui = 1)"_\
+Ensuite, saisissez la valeur correspondant à la centrale souhaitée :\
+     Valeurs possibles : 1, 2, 3, 4 ou 5\
+    > Si vous ne souhaitez aucune centrale spécifique, saisissez une valeur quelconque dans le terminal.
 
 ### Arguments
 
@@ -65,7 +65,7 @@ Ensuite, saisissez la valeur correspondant à la centrale souhaitée :
 - `<type_station>`: Type de station (`hvb`, `hva`, `lv`).
 - `<type_consommateur>`: Type de consommateur (`comp`, `indiv`, `all`).
 
-    _Combinaisons impossibles
+    Combinaisons impossibles
      - hvb avec indiv ou all
      - hva avec indiv ou all
 
