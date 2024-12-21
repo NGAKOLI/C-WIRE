@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c99
 TARGET = main
-SRCS = main.c
+SRCS = main.c avl_traitement_fichier.c avl_gestion.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(TARGET)
