@@ -53,10 +53,10 @@ ou
 ```bash
   1 
 ```   
-    dans le terminal suite à la question suivante 
-    _"Souhaitez-vous sélectionner une centrale spécifique ? (Oui = 1)"_\
-    Ensuite, saisissez la valeur correspondant à la centrale souhaitée :\
-     Valeurs possibles : 1, 2, 3, 4 ou 5\
+dans le terminal suite à la question suivante 
+_"Souhaitez-vous sélectionner une centrale spécifique ? (Oui = 1)"_\
+  - Ensuite, saisissez la valeur correspondant à la centrale souhaitée :\
+    - Valeurs possibles : 1, 2, 3, 4 ou 5\
 > Si vous ne souhaitez aucune centrale spécifique, saisissez une valeur quelconque dans le terminal.
 
 ### Arguments
