@@ -44,7 +44,7 @@ Arbre*extraireFichier(FILE* fichier){  // fonction pour extraire les données d'
     return a;   // retourne l'arbre
 }
 
-void traiterFichiers( FILE* fichier , FILE* final){ // fonction gestion global  pour récupérer les données d'un fichier et écrire dans le traitement dans fichier final
+void traiterFichiers( FILE* fichier , FILE* final){ // fonction gestion global  pour récupérer les données d'un fichier et écrire le traitement dans fichier final
     Arbre* a = NULL; // initialisation d'un arbre
     a = extraireFichier(fichier); // construction de l'arbre avec fichier temporaire
     ajouterFichier(a , final); // écriture des données de L'AVL dans le fichier final
