@@ -38,6 +38,9 @@ C-WIRE est un projet qui permet de faire la synthèse de données d’un systèm
 
 ## Utilisation
 
+1. Déposer le fichier de données dans le répertoire 'input/'
+2. Ajouter les droits d'exécution 
+
 - Pour exécuter ce programme utilisez la commande suivante :
 
 ```bash
